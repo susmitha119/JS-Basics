@@ -1,0 +1,47 @@
+var arr=['STONE','SCISSOR','PAPER'];
+var a=Math.floor(Math.random(arr)*3);
+var PLAYER1=arr[a];
+console.log(PLAYER1);
+
+var PLAYER2 =prompt("FOR PLAYER 2: STONE|PAPER|SCISSOR");
+
+
+
+
+if( PLAYER1=="STONE" &&  PLAYER2=="STONE")
+{
+    alert("Tie");
+}
+else if( PLAYER1=="STONE" &&  PLAYER2=="PAPER")
+{
+    alert("PLAYER 2 WON THE MATCH");
+}
+else if( PLAYER1=="STONE" &&  PLAYER2=="SCISSOR")
+{
+    alert("PLAYER 1 WON THE MATCH");
+}
+else if( PLAYER1=="PAPER" &&  PLAYER2=="PAPER")
+{
+    alert("Tie");
+}
+else if( PLAYER1=="PAPER" &&  PLAYER2=="STONE")
+{
+    alert("PLAYER 1 WON THE MATCH");
+}
+else if( PLAYER1=="PAPER" &&  PLAYER2=="SCISSOR")
+{
+    alert("PLAYER 2 WON THE MATCH");
+}
+else if( PLAYER1=="SCISSOR" &&  PLAYER2=="SCISSOR")
+{
+    alert("Tie")
+}
+else if( PLAYER1=="SCISSOR" &&  PLAYER2=="STONE")
+{
+    alert("PLAYER 2 WON THE MATCH");
+}
+else if(PLAYER1=="SCISSOR" && PLAYER2=="PAPER")
+{
+    alert("PLAYER 1 WON THE MATCH");
+}
+else alert("enter correct input")
