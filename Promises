@@ -1,0 +1,23 @@
+function timegenerator()
+{
+    let number=Number(prompt("enter a number"));
+    var text="";
+    let possi_name="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for(let i=0;i<number;i++)
+    {
+        let p=new Promise((resolve,reject) =>
+        {
+            setTimeout(() => {
+                const random=Math.floor(Math.random()*11)*1000;
+                text+=possi_name.charAt(Math.floor(Math.random()*possi_name));
+                resolve(text+" took " +  random +" ms");
+            },1000 );   
+            
+       })
+       p.then((message) => {
+           console.log(message);
+       })
+    }
+}
+    
+timegenerator()
