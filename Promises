@@ -8,11 +8,13 @@ for(let i=0;i<users_number;i++)
         
         let possi_name="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         
-        var text=possi_name.charAt(Math.floor(Math.random()*possi_name.length));;
+        var text=possi_name.charAt(Math.floor(Math.random()*possi_name.length));
+        
+        console.log(text+" is entering");
         
         setTimeout(() => {
     
-            resolve(text+" took " +  random +" ms");
+            resolve(text+" took " +  random +" ms"+"\n");
         
         },random);
     })
@@ -23,4 +25,3 @@ async function myname()
 }
 await myname();
 }
-
