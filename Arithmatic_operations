@@ -1,36 +1,30 @@
-function operations(num1:number,num2:string)
+function operations(num1:number,num2:number,res:number)
+
 {
-   
-    
-    var num1 :number = 10 
-    var num2:string = 2
-    var res:string = 0
- 
+
     res = num1 + num2 
-    console.log("Sum:        "+res +" "+"- type is - "+typeof(res)); 
+    console.log("Sum:        "+res ); 
 
     res = num1 - num2; 
-    console.log("Difference: "+res +" "+"- type is - "+typeof(res)) 
+    console.log("Difference: "+res ) 
 
     res = num1*num2 
-    console.log("Product:    "+res +" "+"- type is - "+typeof(res)) 
+    console.log("Product:    "+res) 
 
     res = num1/num2 
-    console.log( +" "+"- type is - "+typeof(res))
+    console.log( "division : "+res)
  
     res = num1%num2 
-    console.log("Remainder:   "+res +" "+"- type is - "+typeof(res)) 
+    console.log("Remainder:   "+res ) 
 
     num1++ 
-    console.log("Value of num1 after increment "+num1 +" "+"- type is - "+typeof(num1)) 
+    console.log("Value of num1 after increment "+num1 ) 
 
     num2-- 
-    console.log("Value of num2 after decrement "+num2 +" "+"- type is - "+typeof(num2))
-    
-    
-    
-    
-    
+    console.log("Value of num2 after decrement "+num2 )
     
 }
-operations()
+let num1:number =10 ;
+let num2 :number= 2;
+let res ;
+operations(num1,num2,res)
