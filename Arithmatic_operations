@@ -1,0 +1,36 @@
+function operations(num1:number,num2:string)
+{
+   
+    
+    var num1 :number = 10 
+    var num2:string = 2
+    var res:string = 0
+ 
+    res = num1 + num2 
+    console.log("Sum:        "+res +" "+"- type is - "+typeof(res)); 
+
+    res = num1 - num2; 
+    console.log("Difference: "+res +" "+"- type is - "+typeof(res)) 
+
+    res = num1*num2 
+    console.log("Product:    "+res +" "+"- type is - "+typeof(res)) 
+
+    res = num1/num2 
+    console.log( +" "+"- type is - "+typeof(res))
+ 
+    res = num1%num2 
+    console.log("Remainder:   "+res +" "+"- type is - "+typeof(res)) 
+
+    num1++ 
+    console.log("Value of num1 after increment "+num1 +" "+"- type is - "+typeof(num1)) 
+
+    num2-- 
+    console.log("Value of num2 after decrement "+num2 +" "+"- type is - "+typeof(num2))
+    
+    
+    
+    
+    
+    
+}
+operations()
