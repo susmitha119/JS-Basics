@@ -41,4 +41,5 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
+  Example:() => import('App/Middleware/Example')
 })

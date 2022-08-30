@@ -20,9 +20,13 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-
-Route.post('/multiply','ArithmaticopesController.multiply')
+Route.group(() =>
+{
+Route.get('/add','ArithmaticopesController.add')
+Route.post('/sub','ArithmaticopesController.sub')
+Route.put('/multiply','ArithmaticopesController.multiply')
 Route.post('/division','ArithmaticopesController.division')
+}).middleware('Example')
 
 
 Route.get('/operations','ArithmaticopesController.operations')
