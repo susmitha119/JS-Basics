@@ -9,23 +9,19 @@
           label="Name"
           :rules="namerule"
           filled
-          required
-          >
-        </v-text-field>
+     ></v-text-field>
  
       
-       <v-text-field
+    <v-text-field
         v-model="email"
         :rules="emailRules"
         label="E-mail"
         filled
-        required
-        >
-        </v-text-field>
-      
-        <label>Gender</label>
-  
-        <v-radio-group v-model="radioGroup">
+    ></v-text-field>     
+        
+       
+   <label>Gender</label>
+   <v-radio-group v-model="radioGroup">
         <v-radio
           v-for="(choice, i) in choice"
           :key="i"
@@ -33,19 +29,17 @@
           :value="choice"
           :choice="choice"
           required
-          
         ></v-radio>
-        </v-radio-group>
+   </v-radio-group>
         
-        
-        <v-combobox
+   <v-combobox
         v-model="course"
           :items="items"
           label="Select Course"
           :rules="select"
-          required
-          
-        ></v-combobox>
+  ></v-combobox>
+  
+  
     <label>Hobbies</label>
     <v-checkbox-group>
         <v-checkbox
@@ -55,7 +49,7 @@
           :value="hobbies"
           :item="hobbies"
           v-model="checkboxGroup"
-          required
+        
           
         ></v-checkbox>
       </v-checkbox-group>
