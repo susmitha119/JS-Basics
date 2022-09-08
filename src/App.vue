@@ -157,7 +157,7 @@ export default {
     methods:{
       validate(){
         
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
         this.random=false
         this.result.push({
           name: this.name,
@@ -171,6 +171,7 @@ export default {
         this.dialog = false
         this.$refs.form.reset()
         //console.log(JSON.stringify(this.result));
+      }
       }
 ,      Delete(data)
     {
