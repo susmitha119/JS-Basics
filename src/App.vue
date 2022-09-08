@@ -92,7 +92,7 @@
         <template>
         <thead>
             <tr>
-              <th>ID</th>
+              <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Gender</th>
