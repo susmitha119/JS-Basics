@@ -195,8 +195,7 @@ export default {
 
         this.new = data
        
-        let id = data.id
-        let obj= this.result.find(o => o.id == id)
+       
         this.name = data.name
         this.email = data.email
         this.gender = data.gender
@@ -205,7 +204,7 @@ export default {
         this.dialog = true  
        
         this.dialog=true
-        console.log(obj)
+        
     
      }, 
       editInfo(){
