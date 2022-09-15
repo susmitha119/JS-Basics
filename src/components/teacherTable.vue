@@ -95,7 +95,7 @@
             
             <td>{{values.id}}</td>
             <td>{{values.age }}</td>
-                <td v-amount="5000">{{values.salary}}</td>
+                <td >{{values.salary}}</td>
                 
                 <v-btn             
              color="primary"
@@ -130,9 +130,13 @@
         return {
             valform: {},
             arr: [],
-            id: "",
-            age: "",
-            salary: "",
+            
+            values:{
+                
+                id:'',
+                age:'',
+                salary:''
+            },
             isEdit: false,
             row: "",
             dialog: false,
@@ -213,8 +217,8 @@
             this.dialog = false;
             this.revert();
         }, 
-        tableSearch(val){
-            this.arr = val.data
+        tableSearch(value){
+            this.arr = value.data
         },
     }
 }

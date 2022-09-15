@@ -19,7 +19,7 @@ Vue.filter('trim',function(value) {
 Vue.directive('amount',{
   bind(el,binding){
     if(binding.value>='5000'){
-      return el
+      console.log(el)
     }
   }
 })

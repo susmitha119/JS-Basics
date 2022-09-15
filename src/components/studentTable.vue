@@ -94,17 +94,10 @@
            edit
        
            </v-btn>
-        
-        
-            
-       </tr>
-       
-       
-     
-    
-        </tbody>
+        </tr>
+    </tbody>
     </v-simple-table>
-</div>
+  </div>
 </template>
 <script>
     import  Vue from "vue"
@@ -119,13 +112,16 @@
             return {
                 valform:{},
                 arr:[],
-                id:'',
-                name:'',
+                details:{
+                    id:'',
+                    name:'',
+                    departement:''
+                },
                 namerule:[
                 name=>!!name||'Name is required',
                 name=>/^[a-zA-z]+$/.test(name)||'Name must be valid'
                 ],
-                departement:'',
+              
                 isEdit:false,
                 row:'',
                 dialog:false,
