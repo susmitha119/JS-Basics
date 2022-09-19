@@ -18,12 +18,13 @@
                 </template>
                 <v-card class="white">
 
-                    <v-text-field v-model="details.id" label="id" value="id" filled>
+                    <v-text-field v-model="element.id" label="id" value="id"  filled>
                     </v-text-field>
-                    <v-text-field v-model="details.name" label="name" value="name" filled>
+                    <v-text-field v-model="element.name" label="name" value="name" filled>
                     </v-text-field>
-                    <v-text-field v-model="details.departement" label="departement" value="departement" filled>
+                    <v-text-field v-model="element.departement" label="departement" value="departement" filled>
                     </v-text-field>
+                    <v-text-field v-model="element.salary" label="salary" value="salary" v-direct="element.salary" filled></v-text-field>
                     <v-flex text-center align-center>
                         <v-btn color="primary" @click="cancel">
                             cancel
@@ -55,6 +56,10 @@
                         <button @click="sortDepartmentDescFn()"><span class="mdi mdi-arrow-down"></span></button>
                         <button @click="sortDepartmentAscFn()"><span class="mdi mdi-arrow-up"></span></button>
                     </th>
+                    <th>salary
+                        <button @click="sortSalaryDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                        <button @click="sortSalaryAscFn()"><span class="mdi mdi-arrow-up"></span></button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -63,6 +68,7 @@
                     <td>{{details.id}}</td>
                     <td>{{details.name | trim }}</td>
                     <td>{{details.departement}}</td>
+                    <td>{{details.salary}}</td>
 
                     <v-btn color="primary" @click="deleteData(details.id)">
                         Delete
@@ -80,7 +86,7 @@
 import Vue from "vue"
 import axios from "axios"
 import VueAxios from "vue-axios"
-import { getData, addData, deleteData, editData, sortDesc, sortAsc, ascName, descName, descDepartement, ascDepartement } from '../service/apiFile'
+import { getData, addData, deleteData, editData, sortDesc, sortAsc, ascName, descName, descDepartement, ascDepartement,ascSalary,descSalary } from '../service/apiFile'
 
 Vue.use(VueAxios, axios)
 
@@ -92,10 +98,11 @@ export default {
             res: '',
             valform: {},
             arr: [],
-            details: {
-                id: '',
+            element: {
+                id: null,
                 name: '',
                 departement: ''
+                ,salary:''
             },
             namerule: [
                 name => !!name || 'Name is required',
@@ -123,7 +130,7 @@ export default {
     methods:
     {
         postData() {
-            addData(this.details)
+            addData(this.element)
                 .then((res) => {
                     console.log(res)
                     this.arr = res
@@ -142,14 +149,14 @@ export default {
             this.add = false
             this.dialog = true
             this.valform = details
-            this.details = details
+            this.element = details
         },
         update() {
             let test = this.arr.findIndex(temp => temp.id == this.valform.id)
-            this.arr[test].details = this.details
+            this.arr[test].element = this.details
             this.dialog = false
             this.add = true
-            editData(this.details)
+            editData(this.element)
             this.revert()
             this.$refs.forms.reset()
         },
@@ -201,11 +208,31 @@ export default {
                 })
 
         },
+        sortSalaryAscFn() {
+            ascSalary()
+                .then((res) => {
+                    console.log(res)
+                    this.arr = res
+
+                })
+
+        },
+
+        sortSalaryDescFn() {
+            descSalary()
+                .then((res) => {
+                    console.log(res)
+                    this.arr = res
+                })
+
+        },
+
 
         revert() {
             this.details.name = ''
             this.details.id = ''
             this.details.departement = ''
+            this.details.salary = ''
         },
         cancel() {
             this.add = true

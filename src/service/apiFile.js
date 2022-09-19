@@ -11,11 +11,13 @@ async function getData(){
     return result.data
  }
 async function addData(value){
+    console.log('submit', value.id);
     return await axios.post(`${process.env.VUE_APP_URL}/create/`,
     {
         id:value.id,
         name:value.name,
-        departement:value.departement
+        departement:value.departement,
+        salary:value.salary
     })
  }
  async function deleteData(id){
@@ -26,7 +28,8 @@ async function addData(value){
     {
         id:value.id,
         name:value.name,
-        departement:value.departement
+        departement:value.departement,
+        salary:value.salary
 
     })
  }
@@ -60,6 +63,17 @@ async  function ascDepartement(){
     return result.data
     
 }
+async  function ascSalary(){
+    const result=await axios.get(`${process.env.VUE_APP_URL}/SortAceSalary`)
+    return result.data
+  
+     }
+ async function descSalary()
+ {
+    const result=await axios.get(`${process.env.VUE_APP_URL}/SortDescSalary`)
+    return result.data
+    
+}
 async function searchData(value){
     console.log(value)
     return await axios.post(`${process.env.VUE_APP_URL}/getName/`,
@@ -69,5 +83,5 @@ async function searchData(value){
     })
  }
 
- export { getData,addData,deleteData,editData,descDepartement,ascDepartement,sortDesc,sortAsc,descName,ascName,searchData}
+ export { getData,addData,deleteData,editData,descDepartement,ascDepartement,sortDesc,sortAsc,descName,ascName,searchData,descSalary,ascSalary}
 

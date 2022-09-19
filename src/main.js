@@ -17,15 +17,16 @@ Vue.filter('trim',function(value) {
   else{
     return value.charAt(0).toUpperCase()+value.slice(1,value.length)
   }
-})
-,
-Vue.directive('amount',{
-  bind(el,binding){
-    if(binding.value>='5000'){
-      console.log(el)
-    }
+}),
+Vue.directive('direct', {
+  componentUpdated(el, binding, vnode) {
+    console.log(binding.value)
+    binding.value = binding.value.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // console.log(binding.value)
+    vnode.context.element.salary = binding.value
   }
-})
+}),
 
 
 
