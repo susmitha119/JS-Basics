@@ -1,0 +1,40 @@
+[
+  {
+    "_id": "94b45aff-ab2a-4c50-a45c-e4cb40925fd2",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://127.0.0.1:3333/create",
+    "url": "http://127.0.0.1:3333/create",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-09-20T09:13:32.421Z",
+    "modified": "2022-09-20T09:13:32.583Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"customerId\":32,\n  \"customerName\":\"aravind\",\n  \"phoneNumber\":\"8988374778\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "13c68339-0e4f-44bc-a9c6-78ec29dd8bb8",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://127.0.0.1:3333/create",
+    "url": "http://127.0.0.1:3333/delete/466",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-09-20T09:13:37.308Z",
+    "modified": "2022-09-20T13:18:40.572Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"customerId\":11,\n  \"customerName\":\"suji\",\n  \"phoneNumber\":\"2543566677\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]
