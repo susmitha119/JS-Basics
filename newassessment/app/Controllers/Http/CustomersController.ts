@@ -14,7 +14,8 @@ export default class CustomersController {
         
     }
     public async read(){
-        return await Customer.query().orderBy('customerId','asc')
+        return await Customer.all()
+        // return await Customer.query().orderBy('customerId','asc')
    }
    public async update({request}:HttpContextContract){
        const payload = await request.validate(CustomerValidator)
@@ -53,30 +54,32 @@ export default class CustomersController {
             query
             .whereILike('customer_name','%'+data+'%')
             .orWhereILike('phone_number','%'+data+'%')
-        }),
-    }
-        public async SortAce(){
-            return Customer.query().orderBy("customerId","asc")
+        })
+   }
+  
+
+public async SortIdAsc(){
+  const data= Customer.query().orderBy('customerId','asc')
+  return data
+ }
+public async SortIdDesc(){
+      return Customer.query().orderBy('customerId','desc')
             
             }
-        public async SortDesc(){
-            return Customer.query().orderBy("customerId","desc")
-            
-            }
-       public async SortAceName(){
+public async SortAscName(){
             return Customer.query().orderBy("customerName","asc")
             
             }
-        public async SortDescName(){
+ public async SortDescName(){
             return Customer.query().orderBy("customerName","desc")
              
             }
-        public async SortAcePhone(){
+public async SortAscPhone(){
              return Customer.query().orderBy("phoneNumber","asc")
             
     
             }
-        public async SortDescPhone(){
+public async SortDescPhone(){
             return Customer.query().orderBy("phoneNumber","desc")
             
             }

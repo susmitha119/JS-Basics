@@ -29,7 +29,8 @@ export default class HotelValidator {
     hotelDoorNo:schema.number(),
     hotelStreet:schema.string(),
     hotelLandmark:schema.string(),
-    hotelPincode:schema.string()
+    hotelPincode:schema.string(),
+    customerId:schema.number()
 
 
   })

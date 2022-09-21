@@ -39,7 +39,7 @@ export default class HotelsController {
    public async deleted({request}:HttpContextContract)
    {
        
-       const user1= await Hotel.findByOrFail('id',request.input('id'))
+       const user1= await Hotel.findByOrFail('id',request.params().id)
 
        await user1.delete()
        return  Hotel.all()
@@ -69,5 +69,71 @@ export default class HotelsController {
             .orWhereILike('hotel_pincode','%'+data+'%')
         })
     }
+    public async address({request}){
+        var id = request.params().id
+        return Database
+        .from('hotels')
+        .select('id','hotel_doorno','hotel_street','hotel_landmark','hotel_pincode')
+        .where('id','=',id)
+    }
+    public async SortIdAsc(){
+  const data= Hotel.query().orderBy('id','asc')
+  return data
+ }
+public async SortIdDesc(){
+      return Hotel.query().orderBy('id','desc')
+    
+}
+public async SortAscName(){
+            return Hotel.query().orderBy("hotelName","asc")
+            
+}
+ public async SortDescName(){
+            return Hotel.query().orderBy("hotelName","desc")
+             
+}
+
+// public async SortAscDoor(){
+//              return Hotel.query().orderBy("hotelDoorNo","asc")
+            
+//     }
+// public async SortDescDoor(){
+//     return Hotel.query().orderBy("hotelDoorNo","desc")
+            
+// }
+
+//  public async SortAsccLand(){
+//     return Hotel.query().orderBy("hotelLandmark","desc")
+            
+// }
+//  public async SortDescLand(){
+//     return Hotel.query().orderBy("hotelLandmark","desc")
+                 
+//  }
+//  public async SortAsccStreet(){
+//      return Hotel.query().orderBy("hotelStreet","desc")
+                            
+// }
+// public async SortDescStreet(){
+//     return Hotel.query().orderBy("hotelStreet","desc")
+                                
+// }
+// public async SortAscPin(){
+//       return Hotel.query().orderBy("hotelPincode","desc")
+                                    
+//   }
+//   public async SortDescPin(){
+//     return Hotel.query().orderBy("hotelPincode","desc")
+    
+// }
+public async SortAsc(){
+    return Hotel.query().orderBy("customerId","Asc")
+    
+    }
+public async SortDesc(){
+        return Hotel.query().orderBy("customerId","desc")
+        
+        }
+          
 }
 
