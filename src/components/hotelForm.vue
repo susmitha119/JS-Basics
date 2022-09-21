@@ -1,7 +1,6 @@
 <template>
     <div>
-
-   <div>
+    <div>
  <searchBar :temp='link' @searching="tableSearch"/>
     </div>
     <div>
@@ -17,11 +16,19 @@
                 </template>
                 <v-card class="white">
 
-                    <v-text-field v-model="element.customerId" label="customerId" value="id"  filled>
+                    <v-text-field v-model="element.id" label="id" value="id"  filled>
                     </v-text-field>
-                    <v-text-field v-model="element.customerName" label="customerName" value="name" filled>
+                    <v-text-field v-model="element.hotelName" label="hotelName" value="name" filled>
                     </v-text-field>
-                    <v-text-field v-model="element.phoneNumber" label="phoneNumber" value="departement" filled>
+                    <v-text-field v-model="element.hotelDoorNo" label="hotelDoorNo" value="doorno" filled>
+                    </v-text-field>
+                    <v-text-field v-model="element.hotelLandmark" label="hotelLandmark" value="landmark" filled>
+                    </v-text-field>
+                    <v-text-field v-model="element.hotelStreet" label="hotelStreet" value="street" filled>
+                    </v-text-field>
+                    <v-text-field v-model="element.hotelPincode" label="hotelPincode" value="pincode" filled>
+                    </v-text-field>
+                    <v-text-field v-model="element.customerId" label="customerId" value="cusid" filled>
                     </v-text-field>
                     <v-flex text-center align-center>
                         <v-btn color="primary" @click="cancel">
@@ -44,33 +51,36 @@
         <v-simple-table>
         <thead>
             <tr>
-            <th>customerId
+            <th>id
                
                  <button @click="sortIdAscFn()"><span class="mdi mdi-arrow-up"></span></button>
                  <button @click="sortIdDescFn()"><span class="mdi mdi-arrow-down"></span></button>
             </th>
-            <th>customerName
+            <th>hotelName
                
                 <button @click="sortNameAscFn()"><span class="mdi mdi-arrow-up"></span></button>
                 <button @click="sortNameDescFn()"><span class="mdi mdi-arrow-down"></span></button>
             </th>
-            <th>phoneNumber
+            <th>address
+          </th>
+            <th>customerId
                
-                <button @click="sortAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                <button @click="sortDescFn()"><span class="mdi mdi-arrow-down"></span></button>
-            </th>
+               <button @click="sortAscFn()"><span class="mdi mdi-arrow-up"></span></button>
+               <button @click="sortDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+          </th>
         </tr>
         </thead>
         <tbody>
             <tr v-for="(details,i) in arr" :key="i">
                
+                <td>{{details.id}}</td>
+                <td >{{details.hotel_name  }}</td>
+                <td>{{JSON.stringify(details.hotel_doorno+','+details.hotel_landmark+','+details.hotel_street+','+details.hotel_pincode)}}</td>
                 <td>{{details.customer_id}}</td>
-                <td >{{details.customer_name  }}</td>
-                <td>{{details.phone_number}}</td>
                    
        <v-btn             
              color="primary"
-            @click="deleteData(details)"
+            @click="deleteData(details.id)"
             >
            Delete
            </v-btn>
@@ -98,43 +108,53 @@
          valform:{},
           arr:[],
           element:{
-            customerId:null,
-            customerName:'',
-            phoneNumber:''
+            id:null,
+            hotelName:'',
+            hotelDoorNo:'',
+            hotelLandmark:'',
+            hotelStreet:'',
+            hotelPincode:'',
+            customerId:''
           },
-          link: "http://127.0.0.1:3333/customer/search",
+          link: "http://127.0.0.1:3333/hotel/search",
          isEdit:false,
                 row:'',
                 dialog:false,
                 add:true,
         }
-        
     },
         
         mounted()
         {
-         axios.get('http://127.0.0.1:3333/customer/get')
+         axios.get('http://127.0.0.1:3333/hotel/get')
             .then((resp)=>{this.arr=resp.data
             console.log(this.arr)})
         }, 
         methods:
         {
             postData(){
-                axios.post("http://127.0.0.1:3333/customer/post",
+                
+                axios.post('http://127.0.0.1:3333/hotel/add',
                 {
-                    customerId:this.element.customerId,
-                    customerName:this.element.customerName,
-                    phoneNumber:this.element.phoneNumber
+                   
+                    id:this.element.id,
+                    hotelName:this.element.hotelName,
+                    hotelDoorNo:this.element.hotelDoorNo,
+                    hotelLandmark:this.element.hotelLandmark,
+                    hotelStreet:this.element.hotelStreet,
+                    hotelPincode:this.element.hotelPincode,
+                    customerId:this.element.customerId
+                
                 })
                 this.dialog = false
                 },
                
-                async deleteData(details) 
+                async deleteData(id) 
                 {
-                    console.log(details)
-                    await axios.delete(`http://127.0.0.1:3333/delete/${details.customer_id}`)
+                    
+                    await axios.delete(`http://127.0.0.1:3333/hotel/remove/${id}`)
 
-                    axios.get('http://127.0.0.1:3333/customer/get').then((resp)=>this.arr=resp.data)
+                    axios.get('http://127.0.0.1:3333/hotel/get').then((resp)=>this.arr=resp.data)
                     
 
                     
@@ -146,20 +166,28 @@
                     this.add = false
                     this.dialog = true
                     this.valform = details
-                    this.element.customerId = details.customer_id
-                    console.log(this.element.customerId)
-                    this.element.customerName = details.customer_name
-                    this.element.phoneNumber =details.phone_number       
+                    this.element.id = details.id
+                    console.log(this.element.id)
+                    this.element.hotelName = details.hotel_name
+                    this.element.hotelDoorNo = details.hotel_doorno
+                    this.element.hotelLandmark= details.hotel_landmark
+                    this.element.hotelStreet = details.hotel_street
+                    this.element.hotelPincode =details.hotel_pincode   
+                    this.element.customerId = details.customer_id  
                 },
                 update(){
                      const data = {
+                        id:this.element.id,
+                        hotelName : this.element.hotelName,
+                        hotelDoorNo: this.element.hotelDoorNo,
+                        hotelLandmark : this.element.hotelLandmark,
+                        hotelStreet:this.element.hotelStreet,
+                        hotelPincode:this.element.hotelPincode,
                         customerId : this.element.customerId,
-                        customerName : this.element.customerName,
-                        phoneNumber : this.element.phoneNumber,
                      }
                    
                     console.log(data)
-                    axios.post('http://127.0.0.1:3333/customer/updated',
+                    axios.post('http://127.0.0.1:3333/hotel/update',
                         data)
                     // this.add=true
                     // this.revert()
@@ -167,21 +195,21 @@
                     
                 },
                 sortIdAscFn() {
-                    axios.get('http://127.0.0.1:3333/customer/sortAsc')
+                    axios.get('http://127.0.0.1:3333/hotel/sortIdAsc')
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data
                 })
         },
                 sortIdDescFn() {
-                    axios.get('http://127.0.0.1:3333/customer/sortDesc')
+                    axios.get('http://127.0.0.1:3333/hotel/sortIdDesc')
                     .then((res) => {
                     console.log(res)
                     this.arr = res.data
                 })
         },
         sortNameAscFn() {
-          axios.get('http://127.0.0.1:3333/customer/sortAscName')
+          axios.get('http://127.0.0.1:3333/hotel/sortAscName')
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data
@@ -189,7 +217,7 @@
 
         },
         sortNameDescFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortDescName')
+            axios.get('http://127.0.0.1:3333/hotel/sortDescName')
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data
@@ -197,28 +225,29 @@
 
         },
         sortAscFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortAscPhone')
+                    axios.get('http://127.0.0.1:3333/hotel/sortAsc')
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data
-
                 })
-
         },
-
-        sortDescFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortDescPhone')
-                .then((res) => {
+                sortDescFn() {
+                    axios.get('http://127.0.0.1:3333/hotel/sortDesc')
+                    .then((res) => {
                     console.log(res)
                     this.arr = res.data
                 })
-
         },
         
                 revert(){
-                    this.name=''
-                    this.id=''
-                    this.departement=''
+                   
+                    this.id='',
+                    this.hotelName=''
+                    this.hotelDoorno=''
+                    this.hotelLandmark=''
+                    this.hotelStreet=''
+                    this.hotelPincode=''
+                    this.customerId=''
                 },
                 cancel(){
                     this.add=true

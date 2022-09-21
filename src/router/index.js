@@ -2,6 +2,8 @@ import customerForm from '@/components/customerForm.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import hotelForm from '@/components/hotelForm.vue'
+import searchBar from '@/components/searchBar.vue'
 
 Vue.use(VueRouter)
 
@@ -12,9 +14,19 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/searchBar',
+    name: 'searchBar',
+    component: searchBar
+  },
+  {
     path: '/customerForm',
     name: 'customerForm',
     component: customerForm
+  },
+  {
+    path: '/hotelForm',
+    name: 'hotelForm',
+    component: hotelForm
   },
   {
     path: '/about',
