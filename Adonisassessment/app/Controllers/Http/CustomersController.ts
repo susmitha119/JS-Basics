@@ -14,7 +14,12 @@ export default class CustomersController {
         
     }
     public async read(){
-        return await Customer.all()
+        return await  Database 
+        .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+            .select('customers.*')
+            .groupBy('customers.customer_id')
+            .count("customers.customer_id as hotel_count")
+            .orderBy('hotel_count','asc')
         // return await Customer.query().orderBy('customerId','asc')
    }
    public async update({request}:HttpContextContract){
@@ -69,28 +74,56 @@ export default class CustomersController {
   
 
 public async SortIdAsc(){
-  const data= Customer.query().orderBy('customerId','asc')
-  return data
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('customer_id','asc')
  }
 public async SortIdDesc(){
-      return Customer.query().orderBy('customerId','desc')
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('customer_id','desc')
             
             }
 public async SortAscName(){
-            return Customer.query().orderBy("customerName","asc")
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('customer_name','asc')
             
             }
  public async SortDescName(){
-            return Customer.query().orderBy("customerName","desc")
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('customer_name','desc')
              
             }
 public async SortAscPhone(){
-             return Customer.query().orderBy("phoneNumber","asc")
-            
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('phone_number','asc')
     
             }
 public async SortDescPhone(){
-            return Customer.query().orderBy("phoneNumber","desc")
+    return await  Database 
+    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        .orderBy('phone_number','desc')
             
             }
           

@@ -15,7 +15,18 @@ export default class HotelsController {
         
     }
     public async read(){
-        return await Hotel.all()
+        // return await Hotel.all()
+        return await  Database 
+        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+            // .select('hotels.id')
+            // .select('hotels.hotel_name')
+            // .select('hotels.hotel_doorno')
+            // .select('hotels.hotel_landmark')
+            // .select('hotels.hotel_street')
+            // .select('hotels.hotel_pincode')
+            // .select('hotels.customer_id')
+            .select('hotels.*')
+            .select('customers.customer_name')
    }
    public async update({request}:HttpContextContract){
        const payload = await request.validate(HotelValidator)
@@ -43,6 +54,7 @@ export default class HotelsController {
 
        await user1.delete()
        return  Hotel.all()
+       
    }
    public async getName({request}:HttpContextContract){
     const data = request.input('finding')
@@ -85,61 +97,53 @@ export default class HotelsController {
         .where('id','=',id)
     }
     public async SortIdAsc(){
-  const data= Hotel.query().orderBy('id','asc')
-  return data
+        return await  Database 
+        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+            .select('hotels.*')
+            .select('customers.customer_name')
+            .orderBy('id','asc')
  }
 public async SortIdDesc(){
-      return Hotel.query().orderBy('id','desc')
+    return await  Database 
+    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        .orderBy('id','desc')
     
 }
 public async SortAscName(){
-            return Hotel.query().orderBy("hotelName","asc")
+    return await  Database 
+    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        .orderBy('hotel_name','asc')
+    
             
 }
  public async SortDescName(){
-            return Hotel.query().orderBy("hotelName","desc")
+    return await  Database 
+    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        .orderBy('hotel_name','desc')
+    
              
 }
 
-// public async SortAscDoor(){
-//              return Hotel.query().orderBy("hotelDoorNo","asc")
-            
-//     }
-// public async SortDescDoor(){
-//     return Hotel.query().orderBy("hotelDoorNo","desc")
-            
-// }
-
-//  public async SortAsccLand(){
-//     return Hotel.query().orderBy("hotelLandmark","desc")
-            
-// }
-//  public async SortDescLand(){
-//     return Hotel.query().orderBy("hotelLandmark","desc")
-                 
-//  }
-//  public async SortAsccStreet(){
-//      return Hotel.query().orderBy("hotelStreet","desc")
-                            
-// }
-// public async SortDescStreet(){
-//     return Hotel.query().orderBy("hotelStreet","desc")
-                                
-// }
-// public async SortAscPin(){
-//       return Hotel.query().orderBy("hotelPincode","desc")
-                                    
-//   }
-//   public async SortDescPin(){
-//     return Hotel.query().orderBy("hotelPincode","desc")
-    
-// }
 public async SortAsc(){
-    return Hotel.query().orderBy("customerId","asc")
+    return await  Database 
+    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        .orderBy('customer_id','asc')
     
     }
 public async SortDesc(){
-        return Hotel.query().orderBy("customerId","desc")
+    return await  Database 
+    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        .orderBy('customer_id','desc')
         
         }
           
