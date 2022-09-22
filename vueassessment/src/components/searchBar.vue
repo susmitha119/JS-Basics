@@ -3,7 +3,7 @@
    
  
         <v-text-field
-                v-model="finding"
+                v-model="searchKey"
                 label="search"
                 value="search"
                 @keyup="Search"
@@ -33,7 +33,7 @@
         async Search() {
           console.log(this.temp)
             await Vue.axios.post(this.temp, {
-                finding: this.finding
+                searchKey: this.searchKey
             }).then((response) => {
            
                this.$emit('searching',response)

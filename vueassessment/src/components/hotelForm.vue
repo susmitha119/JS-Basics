@@ -74,10 +74,10 @@
             <tr v-for="(details,i) in arr" :key="i">
                
                 <td>{{details.id}}</td>
-                <td >{{details.hotel_name  }}</td>
-                <td>{{JSON.stringify(details.hotel_doorno+','+details.hotel_landmark+','+details.hotel_street+','+details.hotel_pincode)}}</td>
-                <td>{{details.customer_id}}</td>
-                <td>{{details.customer_name}}</td>
+                <td >{{details.hotelName }}</td>
+                <td>{{details.address}}</td>
+                <td>{{details.customerId}}</td>
+                <td>{{details.customerName}}</td>
                 
                 
                    
@@ -121,7 +121,7 @@
             hotelPincode:'',
             customerId:''
           },
-          link: "http://127.0.0.1:3333/hotel/search",
+          link: "http://127.0.0.1:3333/hotel/searching",
             isEdit:false,
             row:'',
             dialog:false,
@@ -131,7 +131,7 @@
         
         mounted()
         {
-         axios.get('http://127.0.0.1:3333/hotel/owner')
+         axios.get('http://127.0.0.1:3333/hotel/address')
        
             .then((resp)=>{this.arr=resp.data
             console.log(this.arr)})

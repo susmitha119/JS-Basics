@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import HotelValidator from 'App/Validators/HotelValidator';
 import Hotel from '../../Models/Hotel';
 import Database from '@ioc:Adonis/Lucid/Database';
+import Customer from 'App/Models/Customer';
 
 export default class HotelsController {
     public async create({request}:HttpContextContract){
@@ -18,13 +19,7 @@ export default class HotelsController {
         // return await Hotel.all()
         return await  Database 
         .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-            // .select('hotels.id')
-            // .select('hotels.hotel_name')
-            // .select('hotels.hotel_doorno')
-            // .select('hotels.hotel_landmark')
-            // .select('hotels.hotel_street')
-            // .select('hotels.hotel_pincode')
-            // .select('hotels.customer_id')
+          
             .select('hotels.*')
             .select('customers.customer_name')
    }
@@ -57,20 +52,25 @@ export default class HotelsController {
        
    }
    public async getName({request}:HttpContextContract){
-    const data = request.input('finding')
+    const data = request.input('searchKey')
         return Database
-        .from('hotels')
-        .select('*')
+        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        .select('hotels.*')
+        .select('customers.customer_name')
+        // .from('hotels')
+        // .select('*')
         .where((query) =>{
             if(/^[0-9]/.test(data)){
                 query
                 .where('id',data)
+                .orWhere('customer_id',data)
                 .orWhereILike('hotel_name','%'+data+'%')
                 .orWhere('hotel_doorno',data)
                 .orWhereILike('hotel_street','%'+data+'%')
                 .orWhereILike('hotel_landmark','%'+data+'%')
                 .orWhereILike('hotel_pincode','%'+data+'%')
-                .orWhere('customer_id',data)
+                .orWhereILike('customer_name','%'+data+'%')
+
             }
         })
         .orWhere((query) =>{
@@ -79,73 +79,134 @@ export default class HotelsController {
             .orWhereILike('hotel_street','%'+data+'%')
             .orWhereILike('hotel_landmark','%'+data+'%')
             .orWhereILike('hotel_pincode','%'+data+'%')
+            .orWhereILike('customer_name','%'+data+'%')
+
         })
     }
     public async ownerName(){
      
-        return await  Database 
-        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
+        return await  Hotel.query() 
+     .join('customers','customers.customer_id','hotels.customer_id')
             .select('hotels.*')
-            .select('customers.customer_name')
+      
             
         }
-     public async address({request}){
-        var id = request.params().id
-        return Database
-        .from('hotels')
-        .select('id','hotel_doorno','hotel_street','hotel_landmark','hotel_pincode')
-        .where('id','=',id)
-    }
+     
     public async SortIdAsc(){
-        return await  Database 
-        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-            .select('hotels.*')
-            .select('customers.customer_name')
-            .orderBy('id','asc')
+        const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.id','asc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
  }
 public async SortIdDesc(){
-    return await  Database 
-    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        .orderBy('id','desc')
+    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.id','desc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
     
 }
 public async SortAscName(){
-    return await  Database 
-    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        .orderBy('hotel_name','asc')
+    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.hotel_name','asc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
+           
     
             
 }
  public async SortDescName(){
-    return await  Database 
-    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        .orderBy('hotel_name','desc')
+    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.hotel_name','desc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
     
-             
 }
 
 public async SortAsc(){
-    return await  Database 
-    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        .orderBy('customer_id','asc')
+    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.customer_id','asc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
+        
     
     }
 public async SortDesc(){
-    return await  Database 
-    .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        .orderBy('customer_id','desc')
+    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+    .orderBy('hotels.customer_id','desc')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
+        
+        
         
         }
+        public async address(){
+            const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
+            const data = value.map(el => Object.assign({},el.$attributes,{
+                hotelName:el.$extras['hotel_name'] ,
+                id : el.$extras['id'],
+                address: el.$extras['hotel_doorno'] + ','
+                        +el.$extras['hotel_street'] + ','
+                        +el.$extras['hotel_landmark'] + ','
+                        +el.$extras['hotel_pincode'] + ','
+            }))
+            console.log(data)
+            return data
+
+        }
+            // var id = request.params().id
+            // return Database
+            // .from('hotels')
+            // .select('id','hotel_doorno','hotel_street','hotel_landmark','hotel_pincode')
+            // .where('id','=',id)
+        }
           
-}
+ 
 

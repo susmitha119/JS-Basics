@@ -66,7 +66,7 @@
         </thead>
         <tbody>
             <tr v-for="(details,i) in arr" :key="i">
-               
+            
                 <td>{{details.customer_id}}</td>
                 <td >{{details.customer_name  }}</td>
                 <td>{{details.phone_number}}</td>

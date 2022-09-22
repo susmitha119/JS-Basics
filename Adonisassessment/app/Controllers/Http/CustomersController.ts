@@ -43,15 +43,20 @@ export default class CustomersController {
        return  Customer.all()
    }
    public async getName({request}:HttpContextContract){
-    const data = request.input('finding')
+    const data = request.input('searchKey')
         return Database
-        .from('customers')
-        .select('*')
+        .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .count("customers.customer_id as hotel_count")
+        // .orderBy('hotel_count','asc')
+        // .from('customers')
+        // .select('*')
         .where((query) =>{
             if(/^[0-9]/.test(data)){
                 query
-                .where('customer_id',data)
-                .orWhereILike('customer_name',data+'%')
+                .where('customers.customer_id',data)
+                .orWhereILike('customer_name','%'+data+'%')
                 .orWhereILike('phone_number','%'+data+'%')
             }
         })

@@ -44,7 +44,7 @@ Route.group(()=>{
     
     Route.delete('remove/:id','HotelsController.deleted')
     Route.post('searching','HotelsController.getName')
-    Route.post('address/:id','HotelsController.address')
+    Route.get('address','HotelsController.address')
     Route.get('owner','HotelsController.ownerName')
 
 Route.get('sortIdAsc','HotelsController.SortIdAsc')
