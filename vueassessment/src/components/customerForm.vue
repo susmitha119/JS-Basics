@@ -8,7 +8,7 @@
      <v-form refs="forms">
             <v-dialog width="500" v-model="dialog">
 
-                <template v-slot:activator="{ on, attrs }">
+                <template v-slot:activator="{ on }">
                     <v-flex text-right align-right>
                         <v-btn color="primary" v-bind="attrs" v-on="on">
                             Add new

@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CustomerValidator from '../../Validators/CustomerValidator';
 import Customer from 'App/Models/Customer';
-import Database from '@ioc:Adonis/Lucid/Database';
+//import Database from '@ioc:Adonis/Lucid/Database';
 
 export default class CustomersController {
     public async create({request}:HttpContextContract){
