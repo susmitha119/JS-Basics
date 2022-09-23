@@ -14,13 +14,13 @@ export default class CustomersController {
         
     }
     public async read(){
-        return await  Database 
-        .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+        return await  Customer.query()
+        .join('hotels','customers.customer_id','hotels.customer_id')
             .select('customers.*')
             .groupBy('customers.customer_id')
             .count("customers.customer_id as hotel_count")
             .orderBy('hotel_count','asc')
-        // return await Customer.query().orderBy('customerId','asc')
+      
    }
    public async update({request}:HttpContextContract){
        const payload = await request.validate(CustomerValidator)
@@ -44,93 +44,67 @@ export default class CustomersController {
    }
    public async getName({request}:HttpContextContract){
     const data = request.input('searchKey')
-        return Database
-        .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        // .orderBy('hotel_count','asc')
-        // .from('customers')
-        // .select('*')
-        .where((query) =>{
-            if(/^[0-9]/.test(data)){
-                query
-                .where('customers.customer_id',data)
-                .orWhereILike('customer_name','%'+data+'%')
-                .orWhereILike('phone_number','%'+data+'%')
-            }
+    //      return Database
+    //     .from('customers')
+    //     // .join('hotels','customers.customer_id','hotels.customer_id')
+    //     .select('customers.*')
+    //     // .groupBy('customers.customer_id')
+    //     // .count("customers.customer_id as hotel_count")
+    //    .where((query) =>{
+    //         if(/^[0-9]/.test(data)){
+    //             query
+    //             .where('customers.customer_id',data)
+    //             .orWhereILike('customer_name','%'+data+'%')
+    //             .orWhereILike('phone_number','%'+data+'%')
+    //         }
+    //     })
+    //     .orWhere((query) =>{
+    //         query
+    //         .whereILike('customer_name','%'+data+'%')
+    //         .orWhereILike('phone_number','%'+data+'%')
+    //     })
+
+     const result = await Customer.query()
+      .if(data, (query) => {
+        query.where((q) => {
+          q.orWhereRaw(`customer_id::text ilike '%${data}%'`)
+            .orWhereILike('customerName', `%${data}%`)
+            .orWhereILike('phoneNumber', `%${data}%`)
         })
-        .orWhere((query) =>{
-            query
-            .whereILike('customer_name','%'+data+'%')
-            .orWhereILike('phone_number','%'+data+'%')
-        })
-   }public async hotelCount(){
+      })
+
+      return result
+   }
+   public async hotelCount(){
      
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+    const data =  await  Customer.query() .join('hotels','customers.customer_id','hotels.customer_id')
         .select('customers.*')
         .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('hotel_count','asc')
-        
+        .orderBy('hotel_count','asc').count("customers.customer_id as hotel_count")
+            const value = data.map(el => Object.assign({},el.$attributes,{
+            HotelCount:el.$extras['hotel_count']
+        }))
+        console.log(value)
+
+        return value
     }
  
   
 
-public async SortIdAsc(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
+    public async sort({request}){
+        const data =  await  Customer.query() .join('hotels','customers.customer_id','hotels.customer_id')
+        .orderBy(request.input('sortBy'),request.params().order)
         .select('customers.*')
         .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('customer_id','asc')
- }
-public async SortIdDesc(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('customer_id','desc')
-            
-            }
-public async SortAscName(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('customer_name','asc')
-            
-            }
- public async SortDescName(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('customer_name','desc')
-             
-            }
-public async SortAscPhone(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('phone_number','asc')
-    
-            }
-public async SortDescPhone(){
-    return await  Database 
-    .from('customers').join('hotels','customers.customer_id','hotels.customer_id')
-        .select('customers.*')
-        .groupBy('customers.customer_id')
-        .count("customers.customer_id as hotel_count")
-        .orderBy('phone_number','desc')
-            
-            }
+        .orderBy('hotel_count','asc').count("customers.customer_id as hotel_count")
+            const value = data.map(el => Object.assign({},el.$attributes,{
+            HotelCount:el.$extras['hotel_count']
+        }))
+        console.log(value)
+
+        return value
+    }
+
           
     
 }

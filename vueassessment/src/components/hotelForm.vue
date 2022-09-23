@@ -53,19 +53,19 @@
             <tr>
             <th>id
                
-                 <button @click="sortIdAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                 <button @click="sortIdDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                 <button @click="sortId('id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+                 <button @click="sortId('id')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>hotelName
                
-                <button @click="sortNameAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                <button @click="sortNameDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                <button @click="sortId('hotel_name')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+                <button @click="sortId('hotel_name')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>address </th>
           <th>customerId
                
-               <button @click="sortAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-               <button @click="sortDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+               <button @click="sortId('customers.customer_id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+               <button @click="sortId('customers.customer_id')" v-else><span class="mdi mdi-arrow-down"></span></button>
           </th>
           <th>ownerName</th>
         </tr>
@@ -126,6 +126,7 @@
             row:'',
             dialog:false,
             add:true,
+            ascOrder: true,
         }
     },
         
@@ -209,51 +210,18 @@
                     // this.$refs.forms.reset()
                     
                 },
-                sortIdAscFn() {
-                    axios.get('http://127.0.0.1:3333/hotel/sortIdAsc')
+                sortId(columnName) {
+                    console.log(this.ascOrder);
+                    this.ascOrder = !this.ascOrder
+                    axios.post('http://127.0.0.1:3333/hotel/sort/'+(this.ascOrder ? 'asc' : 'desc'),{
+                        "sortBy":columnName
+                    })
                 .then((res) => {
-                    console.log(res)
+                     console.log(res)
                     this.arr = res.data
                 })
         },
-                sortIdDescFn() {
-                    axios.get('http://127.0.0.1:3333/hotel/sortIdDesc')
-                    .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-        },
-        sortNameAscFn() {
-          axios.get('http://127.0.0.1:3333/hotel/sortAscName')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-
-        },
-        sortNameDescFn() {
-            axios.get('http://127.0.0.1:3333/hotel/sortDescName')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-
-        },
-        sortAscFn() {
-                    axios.get('http://127.0.0.1:3333/hotel/sortAsc')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-        },
-                sortDescFn() {
-                    axios.get('http://127.0.0.1:3333/hotel/sortDesc')
-                    .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-        },
-        
+               
                 revert(){
                    
                     this.id='',

@@ -91,10 +91,9 @@ export default class HotelsController {
       
             
         }
-     
-    public async SortIdAsc(){
+    public async sort({request}){
         const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.id','asc')
+    .orderBy(request.input('sortBy'),request.params().order)
             const data = value.map(el => Object.assign({},el.$attributes,{
                 hotelName:el.$extras['hotel_name'] ,
                 id : el.$extras['id'],
@@ -105,88 +104,10 @@ export default class HotelsController {
             }))
             console.log(data)
             return data
- }
-public async SortIdDesc(){
-    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.id','desc')
-            const data = value.map(el => Object.assign({},el.$attributes,{
-                hotelName:el.$extras['hotel_name'] ,
-                id : el.$extras['id'],
-                address: el.$extras['hotel_doorno'] + ','
-                        +el.$extras['hotel_street'] + ','
-                        +el.$extras['hotel_landmark'] + ','
-                        +el.$extras['hotel_pincode'] + ','
-            }))
-            console.log(data)
-            return data
-    
-}
-public async SortAscName(){
-    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.hotel_name','asc')
-            const data = value.map(el => Object.assign({},el.$attributes,{
-                hotelName:el.$extras['hotel_name'] ,
-                id : el.$extras['id'],
-                address: el.$extras['hotel_doorno'] + ','
-                        +el.$extras['hotel_street'] + ','
-                        +el.$extras['hotel_landmark'] + ','
-                        +el.$extras['hotel_pincode'] + ','
-            }))
-            console.log(data)
-            return data
-           
-    
-            
-}
- public async SortDescName(){
-    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.hotel_name','desc')
-            const data = value.map(el => Object.assign({},el.$attributes,{
-                hotelName:el.$extras['hotel_name'] ,
-                id : el.$extras['id'],
-                address: el.$extras['hotel_doorno'] + ','
-                        +el.$extras['hotel_street'] + ','
-                        +el.$extras['hotel_landmark'] + ','
-                        +el.$extras['hotel_pincode'] + ','
-            }))
-            console.log(data)
-            return data
-    
-}
-
-public async SortAsc(){
-    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.customer_id','asc')
-            const data = value.map(el => Object.assign({},el.$attributes,{
-                hotelName:el.$extras['hotel_name'] ,
-                id : el.$extras['id'],
-                address: el.$extras['hotel_doorno'] + ','
-                        +el.$extras['hotel_street'] + ','
-                        +el.$extras['hotel_landmark'] + ','
-                        +el.$extras['hotel_pincode'] + ','
-            }))
-            console.log(data)
-            return data
-        
-    
     }
-public async SortDesc(){
-    const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
-    .orderBy('hotels.customer_id','desc')
-            const data = value.map(el => Object.assign({},el.$attributes,{
-                hotelName:el.$extras['hotel_name'] ,
-                id : el.$extras['id'],
-                address: el.$extras['hotel_doorno'] + ','
-                        +el.$extras['hotel_street'] + ','
-                        +el.$extras['hotel_landmark'] + ','
-                        +el.$extras['hotel_pincode'] + ','
-            }))
-            console.log(data)
-            return data
-        
-        
-        
-        }
+   
+
+
         public async address(){
             const value=await Customer.query().join('hotels','customers.customer_id','=','hotels.customer_id').select('*')
             const data = value.map(el => Object.assign({},el.$attributes,{

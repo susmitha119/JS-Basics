@@ -37,6 +37,7 @@
             }).then((response) => {
            
                this.$emit('searching',response)
+               console.log(response)
             })
           },
           

@@ -27,7 +27,7 @@ Route.post('/updated','CustomersController.update')
 Route.delete('delete/:customerId','CustomersController.deleted')
 Route.post('search','CustomersController.getName')
 
-Route.get('sortAsc','CustomersController.SortIdAsc')
+Route.post('sort/:order','CustomersController.sort')
 Route.get('sortDesc','CustomersController.SortIdDesc')
 Route.get('sortAscName','CustomersController.SortAscName')
 Route.get('sortDescName','CustomersController.SortDescName')
@@ -47,8 +47,9 @@ Route.group(()=>{
     Route.get('address','HotelsController.address')
     Route.get('owner','HotelsController.ownerName')
 
-Route.get('sortIdAsc','HotelsController.SortIdAsc')
+Route.post('sortAsc','HotelsController.sortAsc')
 Route.get('sortIdDesc','HotelsController.SortIdDesc')
+Route.post('sort/:order','HotelsController.sort')
 
 Route.get('sortAscName','HotelsController.SortAscName')
 Route.get('sortDescName','HotelsController.SortDescName')

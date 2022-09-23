@@ -46,18 +46,18 @@
             <tr>
             <th>customerId
                
-                 <button @click="sortIdAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                 <button @click="sortIdDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                 <button @click="sort('customer_id')" v-if="ascOrder" ><span class="mdi mdi-arrow-up"></span></button>
+                 <button @click="sort('customer_id')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>customerName
                
-                <button @click="sortNameAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                <button @click="sortNameDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                <button @click="sort('customer_name')"  v-if="ascOrder" ><span class="mdi mdi-arrow-up"></span></button>
+                <button @click="sort('customer_name')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>phoneNumber
                
-                <button @click="sortAscFn()"><span class="mdi mdi-arrow-up"></span></button>
-                <button @click="sortDescFn()"><span class="mdi mdi-arrow-down"></span></button>
+                <button @click="sort('phone_number')" v-if="ascOrder" ><span class="mdi mdi-arrow-up"></span></button>
+                <button @click="sort('phone_number')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>
                 HotelCount
@@ -67,10 +67,10 @@
         <tbody>
             <tr v-for="(details,i) in arr" :key="i">
             
-                <td>{{details.customer_id}}</td>
-                <td >{{details.customer_name  }}</td>
-                <td>{{details.phone_number}}</td>
-                <td>{{details.hotel_count}}</td>
+                <td>{{details.customerId}}</td>
+                <td >{{details.customerName  }}</td>
+                <td>{{details.phoneNumber}}</td>
+                <td>{{details.HotelCount}}</td>
                    
        <v-btn             
              color="primary"
@@ -104,7 +104,8 @@
           element:{
             customerId:null,
             customerName:'',
-            phoneNumber:''
+            phoneNumber:'',
+            ascOrder: true
           },
           link: "http://127.0.0.1:3333/customer/search",
          isEdit:false,
@@ -170,54 +171,19 @@
                     // this.$refs.forms.reset()
                     
                 },
-                sortIdAscFn() {
-                    axios.get('http://127.0.0.1:3333/customer/sortAsc')
+                sort(columnName) {
+                    console.log(this.ascOrder);
+                    this.ascOrder = !this.ascOrder
+                    axios.post('http://127.0.0.1:3333/customer/sort/'+(this.ascOrder ? 'asc' : 'desc'),{
+                    "sortBy":columnName
+                })
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data
                 })
         },
-                sortIdDescFn() {
-                    axios.get('http://127.0.0.1:3333/customer/sortDesc')
-                    .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-        },
-        sortNameAscFn() {
-          axios.get('http://127.0.0.1:3333/customer/sortAscName')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-
-        },
-        sortNameDescFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortDescName')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-
-        },
-        sortAscFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortAscPhone')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-
-                })
-
-        },
-
-        sortDescFn() {
-            axios.get('http://127.0.0.1:3333/customer/sortDescPhone')
-                .then((res) => {
-                    console.log(res)
-                    this.arr = res.data
-                })
-
-        },
+        
+               
         
                 revert(){
                     this.name=''
