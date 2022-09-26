@@ -109,6 +109,11 @@
     export default {
       data () {
         return {
+            config : {
+        headers : {
+          appKey : 'oSwfGjCdn2DZyrzw-ISEPjRUgG2mMjyF'
+        }
+      },
          valform:{},
           arr:[],
           list:[],
@@ -122,6 +127,7 @@
             customerId:''
           },
           link: "http://127.0.0.1:3333/hotel/searching",
+          
             isEdit:false,
             row:'',
             dialog:false,
@@ -132,7 +138,7 @@
         
         mounted()
         {
-         axios.get('http://127.0.0.1:3333/hotel/address')
+         axios.get('http://127.0.0.1:3333/hotel/address',this.config)
        
             .then((resp)=>{this.arr=resp.data
             console.log(this.arr)})
@@ -145,7 +151,7 @@
         {
             postData(){
                 
-                axios.post('http://127.0.0.1:3333/hotel/add',
+                axios.post('http://127.0.0.1:3333/hotel/add',this.config,
                 {
                    
                     id:this.element.id,
@@ -168,9 +174,9 @@
                 async deleteData(id) 
                 {
                     
-                    await axios.delete(`http://127.0.0.1:3333/hotel/remove/${id}`)
+                    await axios.delete(`http://127.0.0.1:3333/hotel/remove/${id}`,this.config)
 
-                    axios.get('http://127.0.0.1:3333/hotel/get').then((resp)=>this.arr=resp.data)
+                    axios.get('http://127.0.0.1:3333/hotel/get',this.config).then((resp)=>this.arr=resp.data)
                     
 
                     
@@ -204,7 +210,7 @@
                    
                     console.log(data)
                     axios.post('http://127.0.0.1:3333/hotel/update',
-                        data)
+                        data,this.config)
                     // this.add=true
                     // this.revert()
                     // this.$refs.forms.reset()

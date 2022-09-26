@@ -34,7 +34,7 @@ Route.get('sortDescName','CustomersController.SortDescName')
 Route.get('sortAscPhone','CustomersController.SortAscPhone')
 Route.get('sortDescPhone','CustomersController.SortDescphone')
 Route.get('/count','CustomersController.hotelCount')
-}).prefix('/customer')
+}).prefix('/customer').middleware('Customer')
 
 Route.group(()=>{
     Route.post('/add','HotelsController.create')
@@ -69,7 +69,7 @@ Route.get('sortDescName','HotelsController.SortDescName')
 Route.get('sortAsc','HotelsController.SortAsc')
 Route.get('sortDesc','HotelsController.SortDesc')
     
-}).prefix('/hotel')
+}).prefix('/hotel').middleware('Customer')
 
 
 

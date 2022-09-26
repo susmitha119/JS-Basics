@@ -8,7 +8,7 @@
      <v-form refs="forms">
             <v-dialog width="500" v-model="dialog">
 
-                <template v-slot:activator="{ on }">
+                <template v-slot:activator="{ on, attrs }">
                     <v-flex text-right align-right>
                         <v-btn color="primary" v-bind="attrs" v-on="on">
                             Add new
@@ -99,6 +99,11 @@
     export default {
       data () {
         return {
+            config : {
+        headers : {
+          appKey : 'oSwfGjCdn2DZyrzw-ISEPjRUgG2mMjyF'
+        }
+      },
          valform:{},
           arr:[],
           element:{
@@ -107,7 +112,7 @@
             phoneNumber:'',
             ascOrder: true
           },
-          link: "http://127.0.0.1:3333/customer/search",
+          link: "http://127.0.0.1:3333/customer/search", 
          isEdit:false,
                 row:'',
                 dialog:false,
@@ -118,14 +123,14 @@
         
         mounted()
         {
-         axios.get('http://127.0.0.1:3333/customer/count')
+         axios.get('http://127.0.0.1:3333/customer/count',this.config)
             .then((resp)=>{this.arr=resp.data
             console.log(this.arr)})
         }, 
         methods:
         {
             postData(){
-                axios.post("http://127.0.0.1:3333/customer/post",
+                axios.post("http://127.0.0.1:3333/customer/post",this.config,
                 {
                     customerId:this.element.customerId,
                     customerName:this.element.customerName,
@@ -139,7 +144,7 @@
                     console.log(details)
                     await axios.delete(`http://127.0.0.1:3333/delete/${details.customer_id}`)
 
-                    axios.get('http://127.0.0.1:3333/customer/get').then((resp)=>this.arr=resp.data)
+                    axios.get('http://127.0.0.1:3333/customer/get',this.config).then((resp)=>this.arr=resp.data)
                     
 
                     
@@ -165,7 +170,7 @@
                    
                     console.log(data)
                     axios.post('http://127.0.0.1:3333/customer/updated',
-                        data)
+                        data,this.config)
                     // this.add=true
                     // this.revert()
                     // this.$refs.forms.reset()
