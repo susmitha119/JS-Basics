@@ -221,7 +221,7 @@
                     this.ascOrder = !this.ascOrder
                     axios.post('http://127.0.0.1:3333/hotel/sort/'+(this.ascOrder ? 'asc' : 'desc'),{
                         "sortBy":columnName
-                    })
+                    },this.config)
                 .then((res) => {
                      console.log(res)
                     this.arr = res.data
@@ -245,6 +245,7 @@
                 },
                 tableSearch(value){
             this.arr = value.data
+            console.log(value.data)
         },
             }
     

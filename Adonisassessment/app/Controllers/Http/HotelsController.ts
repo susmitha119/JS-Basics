@@ -53,35 +53,33 @@ export default class HotelsController {
    }
    public async getName({request}:HttpContextContract){
     const data = request.input('searchKey')
-        return Database
-        .from('hotels').join('customers','customers.customer_id','hotels.customer_id')
-        .select('hotels.*')
-        .select('customers.customer_name')
-        // .from('hotels')
-        // .select('*')
-        .where((query) =>{
-            if(/^[0-9]/.test(data)){
-                query
-                .where('id',data)
-                .orWhere('customer_id',data)
-                .orWhereILike('hotel_name','%'+data+'%')
-                .orWhere('hotel_doorno',data)
-                .orWhereILike('hotel_street','%'+data+'%')
-                .orWhereILike('hotel_landmark','%'+data+'%')
-                .orWhereILike('hotel_pincode','%'+data+'%')
-                .orWhereILike('customer_name','%'+data+'%')
-
-            }
-        })
-        .orWhere((query) =>{
-            query
-            .whereILike('hotel_name','%'+data+'%')
-            .orWhereILike('hotel_street','%'+data+'%')
-            .orWhereILike('hotel_landmark','%'+data+'%')
-            .orWhereILike('hotel_pincode','%'+data+'%')
-            .orWhereILike('customer_name','%'+data+'%')
-
-        })
+    const result=await Hotel.query() .join('customers','customers.customer_id','hotels.customer_id')
+           .select('*')
+            .if(data, (query) => {
+                query.where((q) => {
+                q.whereRaw(`id::text ilike '%${data}%'`)
+                .orWhereRaw(`hotels.customer_id::text ilike '%${data}%'`)
+                .orWhereRaw(`hotel_doorno::text ilike '%${data}%'`)
+                .orWhereRaw(`hotel_pincode::text ilike '%${data}%'`)
+                .orWhereILike('hotel_name', `%${data}%`)
+                .orWhereILike('customers.customer_name', `%${data}%`)
+                .orWhereILike('hotel_landmark', `%${data}%`)
+                .orWhereILike('hotel_street', `%${data}%`)
+                   
+                })
+                
+            })
+console.log(result)
+            const value = result.map(el => Object.assign({},el.$attributes,{
+                customerName:el.$extras['customer_name'],
+                address: el.$attributes['hotelDoorno'] + ','
+                        +el.$attributes['hotelStreet'] + ','
+                        +el.$attributes['hotelLandmark'] + ','
+                        +el.$attributes['hotelPincode'] + ','
+            }))
+        // console.log(value)
+      return value 
+        
     }
     public async ownerName(){
      

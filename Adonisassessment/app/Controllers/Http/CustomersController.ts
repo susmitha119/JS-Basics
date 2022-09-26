@@ -44,36 +44,24 @@ export default class CustomersController {
    }
    public async getName({request}:HttpContextContract){
     const data = request.input('searchKey')
-    //      return Database
-    //     .from('customers')
-    //     // .join('hotels','customers.customer_id','hotels.customer_id')
-    //     .select('customers.*')
-    //     // .groupBy('customers.customer_id')
-    //     // .count("customers.customer_id as hotel_count")
-    //    .where((query) =>{
-    //         if(/^[0-9]/.test(data)){
-    //             query
-    //             .where('customers.customer_id',data)
-    //             .orWhereILike('customer_name','%'+data+'%')
-    //             .orWhereILike('phone_number','%'+data+'%')
-    //         }
-    //     })
-    //     .orWhere((query) =>{
-    //         query
-    //         .whereILike('customer_name','%'+data+'%')
-    //         .orWhereILike('phone_number','%'+data+'%')
-    //     })
+    const result =  await  Customer.query() .join('hotels','customers.customer_id','hotels.customer_id')
+        .select('customers.*')
+        .groupBy('customers.customer_id')
+        .orderBy('hotel_count','asc').count("customers.customer_id as hotel_count")
+          .if(data, (query) => {
+           query.where((q) => {
+            q.whereRaw(`customers.customer_id::text ilike '%${data}%'`)
+               .orWhereILike('customer_name', `%${data}%`)
+               .orWhereILike('phone_number', `%${data}%`)
+           })
+         })
+        
+            const value = result.map(el => Object.assign({},el.$attributes,{
+            HotelCount:el.$extras['hotel_count']
+        }))
+        console.log(value)
+    return value
 
-     const result = await Customer.query()
-      .if(data, (query) => {
-        query.where((q) => {
-          q.orWhereRaw(`customer_id::text ilike '%${data}%'`)
-            .orWhereILike('customerName', `%${data}%`)
-            .orWhereILike('phoneNumber', `%${data}%`)
-        })
-      })
-
-      return result
    }
    public async hotelCount(){
      

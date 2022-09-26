@@ -24,8 +24,17 @@
     import axios from"axios"
     import VueAxios from "vue-axios"
     Vue.use(VueAxios,axios)
-    // @ is an alias to /src
+  
     export default {
+      data(){
+        return {
+            config : {
+        headers : {
+          appKey : 'oSwfGjCdn2DZyrzw-ISEPjRUgG2mMjyF'
+        }
+      },
+    }
+      },
       name: 'searchBar',
       components: {
       },
@@ -34,10 +43,10 @@
           console.log(this.temp)
             await Vue.axios.post(this.temp, {
                 searchKey: this.searchKey
-            }).then((response) => {
+            },this.config).then((response) => {
            
                this.$emit('searching',response)
-               console.log(response)
+              //  console.log(response)
             })
           },
           

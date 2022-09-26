@@ -202,6 +202,7 @@
                 },
                 tableSearch(value){
             this.arr = value.data
+            console.log(value)
         },
             }
     
