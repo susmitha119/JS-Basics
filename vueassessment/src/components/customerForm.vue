@@ -130,12 +130,12 @@
         methods:
         {
             postData(){
-                axios.post("http://127.0.0.1:3333/customer/post",this.config,
+                axios.post("http://127.0.0.1:3333/customer/post",
                 {
                     customerId:this.element.customerId,
                     customerName:this.element.customerName,
                     phoneNumber:this.element.phoneNumber
-                })
+                },this.config)
                 this.dialog = false
                 },
                
@@ -181,7 +181,7 @@
                     this.ascOrder = !this.ascOrder
                     axios.post('http://127.0.0.1:3333/customer/sort/'+(this.ascOrder ? 'asc' : 'desc'),{
                     "sortBy":columnName
-                })
+                },this.config)
                 .then((res) => {
                     console.log(res)
                     this.arr = res.data

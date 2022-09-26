@@ -53,19 +53,19 @@
             <tr>
             <th>id
                
-                 <button @click="sortId('id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
-                 <button @click="sortId('id')" v-else><span class="mdi mdi-arrow-down"></span></button>
+                 <button @click="sort('id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+                 <button @click="sort('id')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>hotelName
                
-                <button @click="sortId('hotel_name')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
-                <button @click="sortId('hotel_name')" v-else><span class="mdi mdi-arrow-down"></span></button>
+                <button @click="sort('hotel_name')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+                <button @click="sort('hotel_name')" v-else><span class="mdi mdi-arrow-down"></span></button>
             </th>
             <th>address </th>
           <th>customerId
                
-               <button @click="sortId('customers.customer_id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
-               <button @click="sortId('customers.customer_id')" v-else><span class="mdi mdi-arrow-down"></span></button>
+               <button @click="sort('customers.customer_id')" v-if="ascOrder"><span class="mdi mdi-arrow-up"></span></button>
+               <button @click="sort('customers.customer_id')" v-else><span class="mdi mdi-arrow-down"></span></button>
           </th>
           <th>ownerName</th>
         </tr>
@@ -151,7 +151,7 @@
         {
             postData(){
                 
-                axios.post('http://127.0.0.1:3333/hotel/add',this.config,
+                axios.post('http://127.0.0.1:3333/hotel/add',
                 {
                    
                     id:this.element.id,
@@ -162,7 +162,7 @@
                     hotelPincode:this.element.hotelPincode,
                     customerId:this.element.customerId
                 
-                })
+                },this.config)
             //     axios.get('http://127.0.0.1:3333/hotel/get')
             //     .then((resp)=>{this.arr=resp.data
             // console.log(this.arr)}),
@@ -216,7 +216,7 @@
                     // this.$refs.forms.reset()
                     
                 },
-                sortId(columnName) {
+                sort(columnName) {
                     console.log(this.ascOrder);
                     this.ascOrder = !this.ascOrder
                     axios.post('http://127.0.0.1:3333/hotel/sort/'+(this.ascOrder ? 'asc' : 'desc'),{
